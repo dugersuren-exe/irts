@@ -1,66 +1,172 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 1. Орчин бэлтгэх (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Дараах орчин бэлтгэх
+Laragon -ийг суулгахад (php, nginx, mysql,….)
 
-## About Laravel
+* php
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```
+php --version
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* composer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+composer --version
+```
 
-## Learning Laravel
+* git 
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+git --version
+```
+2.	Фолдер бэлдэх
+Фолдер дотроо бэлдэх жишээ нь myapps нэртэй фолдер үүсгэсэх
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Тухайн фолдер дотроо project үүсгэх
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+composer create-project laravel/laravel irst
+```
 
-## Laravel Sponsors
+3.	Өгөгдлийн баазтай холбох
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+.env файл дээр тохиргоо хийж өгөх ёстой. 
 
-### Premium Partners
+Жишээ нь:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=irts
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Contributing
+4.	Нэвтрэх, хамгаалалтын нэмэл санг суулгах
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+composer require laravel/breeze --dev
+php artisan breeze:install
+```
 
-## Code of Conduct
+5.	Модел болон migration-ийг үүсгэх
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+php artisan make:model Stat -m
+php artisan make:model Teacher -m
+php artisan make:model Course -m
+php artisan make:model Student -m
+php artisan make:model Attendance -m
+```
 
-## Security Vulnerabilities
+migration файл дотор дараах кодыг нэмнэ.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+### Stat migration
+```
+    $table->id();
+    $table->string('name');
+    $table->string('abr');
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Teacher migration
+```
+    $table->id();
+    $table->string('firstName');
+    $table->string('lastName');
+    $table->string('gender');
+    $table->string('phoneNumber');
+    $table->string('lesson');
+```
+
+### Course migration
+```
+    $table->id();
+    $table->unsignedBigInteger('teacher_id')->index();
+    $table->integer('grade');
+    $table->string('group');
+    $table->string('YearLesson');
+    $table->boolean('isActive');
+    
+
+    $table->foreign('teacher_id')->references('id')->on('teachers')->cascadeOnDelete();
+```
+
+
+### Student migration
+```
+    $table->id();
+    $table->unsignedBigInteger('course_id')->index();
+    $table->string('firstName');
+    $table->string('lastName');
+    $table->string('gender');
+    $table->string('phoneNumber');
+    $table->string('RD');
+    $table->boolean('isActive');
+
+
+    $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+```
+
+
+### Attendance migration
+```
+    $table->id();
+    $table->unsignedBigInteger('course_id')->index();
+    $table->unsignedBigInteger('student_id')->index();
+    $table->unsignedBigInteger('stat_id')->index();
+    $table->date('adate');
+    $table->timestamps();
+
+
+    $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete();
+    $table->foreign('student_id')->references('id')->on('students')->cascadeOnDelete();
+    $table->foreign('stat_id')->references('id')->on('stats')->cascadeOnDelete();
+```
+
+6.	 
+7.	6. Бааз руу хүснэгт үүсгэх
+8.	 
+9.	php artisan migrate
+php artisan migrate:refresh
+php artisan migrate:refresh --seed
+composer dump-autoload
+10.	 
+11.	php artisan migrate:rollback
+php artisan migrate:rollback --step=5
+12.	 
+13.	php artisan migrate:rollback --pretend
+php artisan migrate:reset
+14.	 
+15.	php artisan make:seeder StatSeeder
+php artisan make:seeder TeacherSeeder
+php artisan make:seeder CourseSeeder
+16.	 
+17.	 
+18.	php artisan make:factory CdateFactory
+19.	 
+20.	 
+21.	php artisan db:seed --class=StatSeeder
+php artisan db:seed --class=UserSeeder
+22.	 
+23.	Ерөнхий seeder-ийг ажиллуулахдаа
+php artisan db:seed
+24.	 
+25.	 
+26.	php artisan make:controller StatController --resource
+php artisan make:controller StudentController --resource
+php artisan make:controller TeacherController --resource
+php artisan make:controller CourseController --resource
+27.	 
+28.	php artisan make:controller AttendanceController --resource
+29.	 
+30.	
+php artisan make:controller PhotoController --model=Photo --resource --requests
+31.	 
+32.	 
+33.	php artisan make:resource GradeResource
+34.	 
+35.	php artisan make:resource GradeCollection
+36.	
