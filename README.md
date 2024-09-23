@@ -231,14 +231,162 @@ php artisan db:seed --class=TeacherSeeder
 
 Ерөнхий seeder-ийг ажиллуулахдаа
 php artisan db:seed
-24.	 
-25.	 
-26.	php artisan make:controller StatController --resource
+
+# Model-ийн тохиргоо хийх
+
+Модел дээр relationship холболт болон нэмэл функцүүдийг бичиж өгснөөр Controller нь түүнийг ашиглан хэрэгцээт өгөгдлөө дуудах боломжтой болно.
+
+Жишээ болнон бид өөрсдийн Model дээр бичигдэх кодыг оруулъя.
+
+## Stat model
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Stat extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+ 
+    public function attendances(){
+        return $this->hasMany(Attendance::class,'stat_id');
+    }
+
+}
+
+```
+
+
+## Teacher model
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Teacher extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+
+    public function courses(){
+        return $this->hasMany(Course::class,'teacher_id');
+    }
+
+}
+
+```
+
+## Course model
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Course extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+ 
+    public function teacher(){
+        return $this->belongsTo(Teacher::class,'teacher_id');
+    }
+ 
+    public function students(){
+        return $this->hasMany(Student::class,'course_id');
+    }
+ 
+    public function attendances(){
+        return $this->hasMany(Attendance::class,'course_id');
+    }
+}
+
+```
+
+## Student model
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+
+    public function course(){
+        return $this->belongsTo(Course::class,'course_id');
+    }
+ 
+    public function attendances(){
+        return $this->hasMany(Attendance::class,'student_id');
+    }
+}
+
+```
+
+## Attendance model
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Attendance extends Model
+{
+    use HasFactory;
+    protected $guarded=[];
+
+    public function course(){
+        return $this->belongsTo(Course::class,'course_id');
+    }
+
+    public function student(){
+        return $this->belongsTo(Student::class,'student_id');
+    }
+
+    public function stat(){
+        return $this->belongsTo(Stat::class,'stat_id');
+    }
+ 
+    
+}
+
+```
+
+
+# Controller үүсгэх
+
+Controller-ийг дараах командын тусламжтайгаар үүсгэнэ.
+
+```
+php artisan make:controller StatController --resource
 php artisan make:controller StudentController --resource
 php artisan make:controller TeacherController --resource
 php artisan make:controller CourseController --resource
-27.	 
-28.	php artisan make:controller AttendanceController --resource
+
+php artisan make:controller AttendanceController --resource
+```
+
 29.	 
 30.	
 php artisan make:controller PhotoController --model=Photo --resource --requests
