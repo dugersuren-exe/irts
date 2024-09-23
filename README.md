@@ -176,20 +176,60 @@ php artisan migrate:reset
 
 ### Seeder -ийг дараах командын тусламжтайгаар үүсгэх болно.
 
+Seeder файлуудыг дараах командын тусламжтайгаар үүсгэнэ.
+
 ```
 php artisan make:seeder StatSeeder
 php artisan make:seeder TeacherSeeder
 php artisan make:seeder CourseSeeder
 ```
 
+Жишээ болгон StatSeeder-ийн кодыг оруулж байна.
+
+```
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use DB;
+class StatSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        DB::table('stats')->delete();
+        $datas = [
+            ['id' => 1, 'name' => 'Ирсэн', 'abr' => 'и'],
+            ['id' => 2, 'name' => 'Чөлөөтэй', 'abr' => 'ч'],
+            ['id' => 3, 'name' => 'Өвчтэй', 'abr' => 'ө'],
+            ['id' => 4, 'name' => 'Тасалсан', 'abr' => 'т'],
+        ];
+        DB::table('stats')->insert($datas);
+    }
+}
+
+```
 
 
-php artisan make:factory CdateFactory
+Уг StatSeeder-ийн тусламжтайгаар өгөгдлийн баазад өгөгдлүүдийг оруулахдаа дараах комындыг өгнө.
 
+```
 php artisan db:seed --class=StatSeeder
-php artisan db:seed --class=UserSeeder
-22.	 
-23.	Ерөнхий seeder-ийг ажиллуулахдаа
+```
+
+Үүнтэй ижилээр бусад Seeder үүдийг үүсгэж болно.
+
+
+```
+php artisan db:seed --class=TeacherSeeder
+php artisan db:seed --class=TeacherSeeder
+```
+
+Ерөнхий seeder-ийг ажиллуулахдаа
 php artisan db:seed
 24.	 
 25.	 
