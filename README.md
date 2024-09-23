@@ -126,29 +126,67 @@ migration файл дотор дараах кодыг нэмнэ.
     $table->foreign('stat_id')->references('id')->on('stats')->cascadeOnDelete();
 ```
 
-6.	 
-7.	6. Бааз руу хүснэгт үүсгэх
-8.	 
-9.	php artisan migrate
+
+## 6. Бааз руу хүснэгт үүсгэх
+
+Migration дээр бичигдсэн командын тусламжтайгаар өгөгдлийн бааз руу хүснэгтүүдийг үүсгэнэ.
+
+Анх migration үүсгэх үед дараах командыг ашиглаж болно.
+
+```
+php artisan migrate
+```
+
+Хуучин хүснэгтүүдээ устгаж шинээр үүсгэхдээ дараах командыг ашиглаж болно.
+
+```
 php artisan migrate:refresh
+```
+
+Хуучин хүснэгтүүдээ устгаж шинээр үүсгээд дараа нь Seeder-ийг ажиллуулна.
+
+```
 php artisan migrate:refresh --seed
+```
+
+migration хийх үед алдаа гарсан бол дараах командын тусламжтайгаар засварлаж болно.
+
+```
 composer dump-autoload
-10.	 
-11.	php artisan migrate:rollback
+```
+
+Migration-ийг буцаах үүрэгтэй
+
+```
+php artisan migrate:rollback
+```
+Сүүлийн k ш migration-ийг буцаах
+
+```
 php artisan migrate:rollback --step=5
-12.	 
-13.	php artisan migrate:rollback --pretend
+```
+
+Бусад хэлбэрүүд
+
+```
+php artisan migrate:rollback --pretend
 php artisan migrate:reset
-14.	 
-15.	php artisan make:seeder StatSeeder
+```
+# Seeder үүсгэх 
+
+### Seeder -ийг дараах командын тусламжтайгаар үүсгэх болно.
+
+```
+php artisan make:seeder StatSeeder
 php artisan make:seeder TeacherSeeder
 php artisan make:seeder CourseSeeder
-16.	 
-17.	 
-18.	php artisan make:factory CdateFactory
-19.	 
-20.	 
-21.	php artisan db:seed --class=StatSeeder
+```
+
+
+
+php artisan make:factory CdateFactory
+
+php artisan db:seed --class=StatSeeder
 php artisan db:seed --class=UserSeeder
 22.	 
 23.	Ерөнхий seeder-ийг ажиллуулахдаа
