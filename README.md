@@ -355,7 +355,7 @@ class Attendance extends Model
 {
     use HasFactory;
     protected $guarded=[];
-
+    public $timestamps = false;
     public function course(){
         return $this->belongsTo(Course::class,'course_id');
     }
@@ -387,8 +387,43 @@ php artisan make:controller CourseController --resource
 php artisan make:controller AttendanceController --resource
 ```
 
-29.	 
-30.	
+#Route-ийг удирдах
+
+routes/api.php файлд route-үүдийг бичиж өгнө.
+
+1. Шууд route хэсгээс хариулт өгөх хэлбэр
+
+```
+Route::get('/greeting', function () {
+    return 'Hello World';
+});
+```
+2. Controller-ийн функцийг дуудах үед 
+   * Controller-ийг routes/api.php дотор дуудаж оруулж ирнэ.
+   * Үндсэн код бичигдэнэ.
+
+
+```
+    Route::get('/courses', [TeacherController::class, 'index']);
+    Route::get('/courses/{id}', [TeacherController::class, 'show']);
+    Route::post('/courses', [TeacherController::class, 'create']);
+    Route::post('/courses/{id}', [TeacherController::class, 'update']);
+    Route::delete('/courses/{id}', [TeacherController::class, 'destroy']);
+```
+Route-ийн дуудалтыг харах командыг өгч болно.
+
+```
+php artisan route:list
+```
+
+# Resource файлыг үүсгэх
+
+Resource файл нь хэрэглэгч рүү илгээх мэдээллийг форматлах үүрэгтэй байдаг.
+
+```
+php artisan make:resource CourseResource 
+```
+
 php artisan make:controller PhotoController --model=Photo --resource --requests
 31.	 
 32.	 

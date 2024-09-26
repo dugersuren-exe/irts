@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('phoneNumber');
             $table->string('lesson');
+            //$table->timestamps();
         });
     }
 
