@@ -753,6 +753,30 @@ php artisan make:controller AttendanceController
 ```
 Энэ команд нь зөвхөн Controller файлыг хоосон үүсгэдэг.
 
+Жишээ нь:
+
+```
+php artisan make:controller StatController 
+```
+
+Дээрх командыг өгөхөд дараах код үүснэ.
+
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class StatusController extends Controller
+{
+    //
+}
+
+```
+
+Энэхүү кодонд бид өөрсдөө хэрэгтэй функцүүдээ бичиж өгч ашиглах хэрэгтэй болдог.
+
 
 Үүнээс гадна Controller дотор байж болох хоосон функцүүдийг мөн нэмэлтээр оруулан үүсгүүлж болдог. Ингэж үүсгэхийн тулд дээрх командын оронд дараах байдлаар бичиж өгч болно.
 
@@ -766,6 +790,83 @@ php artisan make:controller TeacherController --resource
 php artisan make:controller CourseController --resource
 php artisan make:controller AttendanceController --resource
 ```
+
+Харин бид загвар функцтэй байдлаар Controller-ийг үүсгэх жишээг туршиж үзье. Жишээ нь: 
+
+```
+php artisan make:controller StatController --resource
+```
+Дээрх командын тусламжтайгаар дараах код бүхий файл үүснэ.
+
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class StatusController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
+
+```
+Энэ кодонд өргөн хэрэглэгддэг функцүүдийг хамтад нь үүсгэж өгсөн байна.
+
 
 Одоо бид Controller файлыг үүсгэсэн хэдий ч түүнийг дуудаж ажиллаж байгааг хянах боломжийг бүрдүүлэхийн тулд **Routing** ийг удирдах шаардлагатай болдог.
 
