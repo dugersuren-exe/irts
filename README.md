@@ -1022,24 +1022,24 @@ CRUD (Create, Read, Update, Delete) гэсэн үндсэн 4 үйлдлийг A
 
 ### Read - Хүснэгтийн бүх өгөгдлийг уншиж авах 
 
-Read буюу өгөгдлийн бааз дээрээс хүснэгтийн бүх өгөгдлийн уншиж авах үйлдэл өөрөөр хэлбэл <code>SELECT * from table </code> query-ийн үр дүнг дараах байдлаар зохион байгуулж болно.
+Read буюу өгөгдлийн бааз дээрээс хүснэгтийн бүх өгөгдлийн уншиж авах үйлдэл өөрөөр хэлбэл <code> SELECT * from table </code> query-ийн үр дүнг дараах байдлаар зохион байгуулж болно.
 
-    ```
-    Route::get('/courses', [CourseController::class, 'index']);
-    ```
-    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses</code> гэсэн **URL** хаяг **get**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **index** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн index функцийг авч үзвэл
+```
+Route::get('/courses', [CourseController::class, 'index']);
+```
+Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses</code> гэсэн **URL** хаяг **get**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **index** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн index функцийг авч үзвэл
 
-    ```
-    use App\Models\Course;
+```
+use App\Models\Course;
+...
+public function index()
+{
+    return Course::all();
+}
+```
+CourseController дотор <code>use App\Models\Course;</code> нь  Course нэртэй model-ийг import хийн оруулж ирж байгаа бөгөөд CourseController дотор **Course** нэртэй model-ийн **all()** функцийн тусламжтайгаар өгөгдлийн баазын өгөгдлүүдийг бүгдийг нь авч байгаа үйлдэл юм.
 
-    public function index()
-    {
-        return Course::all();
-    }
-    ```
-    CourseController дотор <code>use App\Models\Course;</code> нь  Course нэртэй model-ийг import хийн оруулж ирж байгаа бөгөөд CourseController дотор **Course** нэртэй model-ийн **all()** функцийн тусламжтайгаар өгөгдлийн баазын өгөгдлүүдийг бүгдийг нь авч байгаа үйлдэл юм.
-
-    Энэхүү кодын бид дараа дараагийн ойлголтууд дээр сайжруулаад явах юм.
+Энэхүү кодын бид дараа дараагийн ойлголтууд дээр сайжруулаад явах юм.
 
 
 
