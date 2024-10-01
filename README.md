@@ -1,40 +1,91 @@
-## 1. Орчин бэлтгэх (Laravel)
+# API апп боловсруулах
 
-Дараах орчин бэлтгэх
-Laragon -ийг суулгахад (php, nginx, mysql,….)
 
-* php
+API боловсруулах хичээлийг ирц бүртгэлийн project угсрахдаа тайлбарлаад явъя.
 
+Энэхүү project-ийг гүйцэтгэхдээ дараах алхамуудыг хэрэгжүүлэх хэрэгтэй
+
+<details>
+<summary> 1. Орчиноо бэлдэх  </summary>
+
+Project-ийг угсрахын тулд эхлээд орчиноо бүрдүүлсэн байх шаардлагатай.
+php 8.1.10, mysql, git, commposer зэргийг ашиглахаар сонгож авсан.
+
+Эдгээрийн хувилбарыг дараах командын тусламжтайгаар шалгаж болно.
+
+php-ийн хувилбар
 ```
 php --version
 ```
 
-* composer
+composer-ийн хувилбарыг шалгах
 
 ```
 composer --version
 ```
 
-* git 
+git-ийн хувилбарыг шалгах
 
 ```
 git --version
 ```
-2.	Фолдер бэлдэх
-Фолдер дотроо бэлдэх жишээ нь myapps нэртэй фолдер үүсгэсэх
+Мөн нэмэлэт байдлаар Laragon-ийг суулган ашиглаж болно.
 
-Тухайн фолдер дотроо project үүсгэх
+Laragon-ийг суулгасан тохиолдолд php, composer, mysql гэх мэт програм хангамжууд нь давхар суулгагддаг.
+
+Харин түүнийг  Virtual Environment дээр тохиргоо хийж public байдлаар ашиглах боломжийг бүрдүүлэх хэрэгтэй.
+
+
+
+</details>
+
+---
+
+
+<details>
+<summary> 2. Project-оо үүсгэх  </summary>
+
+### Фолдер бэлдэх
+
+Ер нь аливаа project-ийг үүсгэхдээ өөрийн 
+Фолдер дотроо үүсгэж байх хэрэгтэй.
+
+Одоо бид жишээ болгон өөрийн project-үүдийг үүсгэх apps нэртэй фолдер дотроо irts нэртэй project үүсгэе.
+ Үүний тулд cmd-ийг ашиглан тухайн apps нэртэй фолдер дотроо очсон байх ёстой.
+
+ фолдероо солихдоо cd дараах командыг ашиглаж болно. 
+
+ ```
+ cd apps
+ ```
+
+
+Project үүсгэх команд
 
 ```
-composer create-project laravel/laravel irst
+composer create-project laravel/laravel irts
 ```
 
-3.	Өгөгдлийн баазтай холбох
+Тухайн project-оо ажиллуулж үзэх. Үүний тулд irts нэртэй фолдер дотроо шилжсэн байх ёстой.
 
-.env файл дээр тохиргоо хийж өгөх ёстой. 
+Мөн VSCode ашиглаж байгаа бол тухайн irts нэртэй фолдерийг нээх ёстой. Гадна талын фолдер эсвэл дотор талын фолдерийг нээсэн тохиолдолд ажиллахгүй байх магадлалтай.
 
-Жишээ нь:
+```
+php artisan serve
+```
 
+</details>
+
+---
+
+<details>
+<summary> 3. Өгөгдлийн баазтай холбох  </summary>
+
+Project-ийг өгөгдлийн баазтай холбохын тулд:
+1. mySql -ийг суулгасан байх ёстой бөгөөд mySql нь хэвийн ажиллаж байх ёстой.
+2. .env файл дээр тохиргоо хийж өгөх ёстой. 
+
+**Жишээ нь**
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -44,14 +95,47 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-4.	Нэвтрэх, хамгаалалтын нэмэл санг суулгах
+Энэ хэсэгт Mysql -тэй холбогдох тохиргоог хийж хадгална.
+</details>
+
+---<details>
+<summary> 4. Authentication-ийг удирдах боломжийг бүрдүүлэх  </summary>
+
+Нэвтрэх, хамгаалалтын нэмэл санг суулгах
 
 ```
 composer require laravel/breeze --dev
-php artisan breeze:install
 ```
 
-5.	Модел болон migration-ийг үүсгэх
+Прожект-д цаанаасаа бичигдсэн кодыг нэмж өгөх
+
+```
+php artisan breeze:install
+```
+</details>
+
+---
+
+
+<details>
+<summary> 5. Модел болон migration-ийг үүсгэх  </summary>
+
+Migration нь өгөгдлийн баазад үүсгэх хүснэгт болон тэдгээрийн хоорондын relationship холболтыг зохион байгуулах боломжийг олгодог.
+
+Мөн Relationship холболтыг удирдахын тулд Migration файлыг үүсгэх дараалал нь маш чухал байдаг. Иймд бид дараах байдлаар ажиллуулъя.
+
+```
+php artisan make:model Stat
+php artisan make:model Teacher
+php artisan make:model Course 
+php artisan make:model Student 
+php artisan make:model Attendance 
+```
+
+Мөн migration-ийг үүсгэхдээ тухайн migration-ий Модел -ийг нь хамтад нь үүсгэх боломжтой байдаг.
+
+Тэгэхээр бид дээрх кодыг ажиллуулахгүйгээр хамтад нь дараах кодын тусламжтайгаар үүсгээд явъя.
+
 
 ```
 php artisan make:model Stat -m
@@ -60,9 +144,19 @@ php artisan make:model Course -m
 php artisan make:model Student -m
 php artisan make:model Attendance -m
 ```
+Дээрх командыг ажиллуулснаар Stat, Teacher, Course, Student, Attendance -ийн тус бүр migration болон Model-ийн нийт 10 файл үүснэ. 
 
-migration файл дотор дараах кодыг нэмнэ.
+Эхлээд бид Migration файлтай ажиллана. Дараа нь бид үүссэн Model-уудтай ажиллана.
 
+</details>
+
+---
+
+
+<details>
+<summary> 6. Хүснэгт бүрийн талбаруудыг зааж өгөх, үүсгэх  </summary>
+
+Үүссэн Migration файлд хүснэгтийн багануудыг зааж өгнө.
 
 ### Stat migration
 ```
@@ -126,41 +220,36 @@ migration файл дотор дараах кодыг нэмнэ.
     $table->foreign('stat_id')->references('id')->on('stats')->cascadeOnDelete();
 ```
 
+Migration файлд бичигдсэн командын тусламжтайгаар өгөгдлийн бааз (mysql) руу хүснэгтүүдийг үүсгэхдээ дараах командыг ашиглна.
 
-## 6. Бааз руу хүснэгт үүсгэх
-
-Migration дээр бичигдсэн командын тусламжтайгаар өгөгдлийн бааз руу хүснэгтүүдийг үүсгэнэ.
-
-Анх migration үүсгэх үед дараах командыг ашиглаж болно.
+Баазад өмнө нь хүснэгт үүсээгүй байгаа бол migration -ийн тусламжтайгаар хүснэгт үүсгэхдээ дараах командыг ашиглаж болно.
 
 ```
 php artisan migrate
 ```
 
-Хуучин хүснэгтүүдээ устгаж шинээр үүсгэхдээ дараах командыг ашиглаж болно.
+Хэрвээ хуучин хүснэгтүүдээ устгаж шинээр үүсгэхдээ дараах командыг ашиглаж болно.
 
 ```
 php artisan migrate:refresh
 ```
 
-Хуучин хүснэгтүүдээ устгаж шинээр үүсгээд дараа нь Seeder-ийг ажиллуулна.
+### Анхаар!!!
 
-```
-php artisan migrate:refresh --seed
-```
+migration хийх үед алдаа гарсан бол дараах командуудын тусламжтайгаар засварлаж болно.
 
-migration хийх үед алдаа гарсан бол дараах командын тусламжтайгаар засварлаж болно.
 
 ```
 composer dump-autoload
 ```
 
-Migration-ийг буцаах үүрэгтэй
+Migration хийсэн үйлдлийг буцаах үүрэгтэй
 
 ```
 php artisan migrate:rollback
 ```
-Сүүлийн k ш migration-ийг буцаах
+
+Сүүлийн k ш migration үйлдлийг буцаах
 
 ```
 php artisan migrate:rollback --step=5
@@ -172,9 +261,19 @@ php artisan migrate:rollback --step=5
 php artisan migrate:rollback --pretend
 php artisan migrate:reset
 ```
-# Seeder үүсгэх 
 
-### Seeder -ийг дараах командын тусламжтайгаар үүсгэх болно.
+
+</details>
+
+---
+
+
+<details>
+<summary> 7. Seeder-тэй ажиллах </summary>
+
+Seeder нь өгөгдлийн бааз руу өгөгдсөн загвар дата-г оруулах үүрэгтэй байдаг. Энэхүү загвар өгөгдлийг оруулахдаа эхлээд Seeder файлыг үүсгэх ёстой бөгөөд дотор нь өгөгдлүүдээ оруулж хадгалсан байх ёстой.
+
+### Seeder файлыг үүсгэх 
 
 Seeder файлуудыг дараах командын тусламжтайгаар үүсгэнэ.
 
@@ -182,9 +281,14 @@ Seeder файлуудыг дараах командын тусламжтайга
 php artisan make:seeder StatSeeder
 php artisan make:seeder TeacherSeeder
 php artisan make:seeder CourseSeeder
+
+php artisan make:seeder StudentSeeder
+php artisan make:seeder AttendanceSeeder
 ```
 
-Жишээ болгон StatSeeder-ийн кодыг оруулж байна.
+Үүссэн файлд хүснэгтэд оруулах өгөгдлийг бичиж хадгалах ёстой.
+
+Жишээ болгон Stat, Teacher, Course Seeder-ийн кодыг авч үзье.
 
 ```
 <?php
@@ -214,12 +318,133 @@ class StatSeeder extends Seeder
 
 ```
 
+### Анхаарах зүйл!!! 
 
-Уг StatSeeder-ийн тусламжтайгаар өгөгдлийн баазад өгөгдлүүдийг оруулахдаа дараах комындыг өгнө.
+DB -ийг ашиглаж байгаа учир DB-ийг Seeder файл дотор import хийж оруулах ёстой.
+
+```
+use DB;
+```
+
+Үүнтэй ижил зарчимаар Teacher болон Course-ийг өгөгдлийг бичнэ. Жишээ болнон гол хэсгийг авч үзье.
+
+### TeacherSeeder 
+
+TeacherSeeder-д нэмэх кодыг доор харуулав. Мөн энэ файлд use DB; -ийг мөн нэмэх ёстой гэдгийг анхаарах хэрэгтэй.
+
+```
+        DB::table('teachers')->delete();
+        $datas = [
+            ['id' => 20200101, 'firstName' => 'Дүгэрсүрэн', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '999', 'lesson' => 'Мэдээлэлзүй'],
+            ['id' => 20200102, 'firstName' => 'Баасандорж', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '8888', 'lesson' => 'Мэдээлэлзүй'],
+            ['id' => 20200103, 'firstName' => 'Мөнхбаяр', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '999', 'lesson' => 'Мэдээлэлзүй'],
+            ['id' => 20200104, 'firstName' => 'Ариунсарнай', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '8888', 'lesson' => 'Мэдээлэлзүй'],
+            ['id' => 20200105, 'firstName' => 'Сайнбуян', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '999', 'lesson' => 'Мэдээлэлзүй'],
+            ['id' => 20200106, 'firstName' => 'Хулан', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '8888', 'lesson' => 'Монгол хэл'],
+            ['id' => 20200107, 'firstName' => 'Буяндэлгэр', 'lastName' => 'Б', 'gender' => 'эрэгтэй', 'phoneNumber' => '8888', 'lesson' => 'Монгол хэл'],
+        ];
+        DB::table('teachers')->insert($datas);
+
+```
+
+### CourseSeeder 
+
+CourseSeeder-д нэмэх кодыг доор харуулав. Мөн энэ файлд use DB; -ийг мөн нэмэх ёстой гэдгийг анхаарах хэрэгтэй.
+
+```
+        DB::table('courses')->delete();
+        $datas = [
+            ['id' => 1, 'teacher_id' => 20200101,'grade' => 12 , 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 2, 'teacher_id' => 20200102,'grade' => 11 , 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 3, 'teacher_id' => 20200103,'grade' => 10 , 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 4, 'teacher_id' => 20200104,'grade' => 9 , 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 5, 'teacher_id' => 20200105,'grade' => 8 , 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 6, 'teacher_id' => 20200106,'grade' => 7, 'group' => 'А', 'YearLesson' => '2024-2025', 'isActive' => true],
+            ['id' => 7, 'teacher_id' => 20200107,'grade' => 7 , 'group' => 'Б', 'YearLesson' => '2024-2025', 'isActive' => true],
+        ];
+        DB::table('courses')->insert($datas);
+```
+
+Энд бичигдсэн өгөгдлийн дангаар нь ажиллуулахдаа дараах командыг өгөх хэрэгтэй болдог.
+
+StatSeeder-ийг ажиллуулж Stat хүснэгтэд өгөгдлүүдийг оруулахдаа дараах команыг ашиглана.
 
 ```
 php artisan db:seed --class=StatSeeder
 ```
+
+TeacherSeeder-ийг ажиллуулж Teacher хүснэгтэд өгөгдлүүдийг оруулахдаа дараах команыг ашиглана.
+
+```
+php artisan db:seed --class=TeacherSeeder
+```
+
+CourseSeeder-ийг ажиллуулж Course хүснэгтэд өгөгдлүүдийг оруулахдаа дараах команыг ашиглана.
+
+```
+php artisan db:seed --class=CoursetSeeder
+```
+
+## Таньд өгөх даалгавар.
+
+Таны даалгавар бол үлдсэн StudentSeeder, AttendanceSeeder гэсэн 2 Seeder-ийг үүсгэж оруулах тогтмол өгөгдлийг нэмж ажиллуулах
+
+## Seeder -үүдийг нэгтгэх
+
+Seeder бүрийн кодыг тус бүрд нь ажиллуулахгүйгээр нэг Seeder дуудаж бүгдийг нь зэрэг ажиллуулах боломжтой байдаг. Үүний тулд уг Seeder файлуудыг DatabaseSeeder дотор бичиж өгөөд дуудах боломжтой байдаг. Ийм кодыг авч үзье.
+
+
+Жишээ болгон StatSeeder-ийн кодыг оруулж байна.
+
+DatabaseSeeder файл дотрох код
+
+```
+<?php
+
+namespace Database\Seeders;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // call All seeder 
+        $this->call([
+            StatSeeder::class,
+            TeacherSeeder::class,
+            CourseSeeder::class,
+        ]);        
+    }
+}
+
+```
+Уг кодыг бичсний дараар дараах нэг командын тусламжтайгаар 3 seeder файлын өгөгдлийн нэг дор оруулах боломжой болж байна.
+```
+php artisan migrate:refresh --seed
+```
+
+
+
+## Даалгавар 2
+
+Та нэмэлтээр бичсэн 2 Seeder файлаа мөн энд нэгтгэн бичээд нэг дуудалтаар ажиллаж байгаа эсэхийг шалгаж үзээрэй.
+
+
+## Нэмэлт мэдээлэл
+
+
+
+
+
+
+Уг StatSeeder-ийн тусламжтайгаар өгөгдлийн баазад өгөгдлүүдийг оруулахдаа дараах комындыг өгнө.
+
+
 
 Үүнтэй ижилээр бусад Seeder үүдийг үүсгэж болно.
 
@@ -231,6 +456,51 @@ php artisan db:seed --class=TeacherSeeder
 
 Ерөнхий seeder-ийг ажиллуулахдаа
 php artisan db:seed
+</details>
+
+---
+
+
+<details>
+<summary> 8. Орчиноо бэлдэх  </summary>
+
+</details>
+
+---
+
+
+<details>
+<summary> 9. Орчиноо бэлдэх  </summary>
+
+</details>
+
+---
+
+
+<details>
+<summary> 9.  </summary>
+
+</details>
+
+---
+
+
+4.	
+
+5.	
+
+
+
+
+
+
+# Factory -ийг үүсгэх
+
+```
+php artisan make:factory CourseFactory
+```
+
+
 
 # Model-ийн тохиргоо хийх
 

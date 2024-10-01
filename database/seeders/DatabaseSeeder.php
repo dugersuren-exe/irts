@@ -12,13 +12,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // call All seeder 
         $this->call([
             StatSeeder::class,
             TeacherSeeder::class,
             CourseSeeder::class,
         ]);
-        \App\Models\User::factory(10)->create();
 
+        //Factory-ийг дуудаж байгаа хэлбэр
+        \App\Models\User::factory(10)->create();
+        
+        \App\Models\Course::factory(10)->create();
+        \App\Models\Student::factory(100)->create();
+
+        // Factory-ийг утга олгож дуудах
         \App\Models\User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@admin.com',

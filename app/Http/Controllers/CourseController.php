@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Teacher;
 use App\Http\Resources\CourseResource;
 class CourseController extends Controller
 {
@@ -12,18 +13,31 @@ class CourseController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {        
+    {    try {
+        $status = true;    
         $x=CourseResource::collection(Course::all());
+    } catch(\Exception $ex){
+        $status = false;
+         $x = $ex->getMessage();
+    }
+      
         return response()->json([
             'data'=>$x,
-        ],200) ;
+        'status'=> $status]) ;
     }
 
     /**     * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $x=Course::create([
+            'teacher_id'=> $request->teacher_id,
+            'grade'=> $request->grade,
+            'group'=> $request->group,
+            'YearLesson'=> $request->YearLesson,
+            'isActive'=> $request->isActive
+        ]);
+        return $x;
     }
 
     /**
@@ -31,7 +45,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "store";
     }
 
     /**
@@ -39,7 +53,8 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $course=Course::find($id);
+        return $course ;
     }
 
     /**
@@ -47,7 +62,7 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return "edit";
     }
 
     /**
@@ -55,7 +70,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return "update";
     }
 
     /**
@@ -63,6 +78,28 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $res=Course::find($id);
+        
+
+        if ($res.count()>0){
+            $res->delete();
+            $data=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $data=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+        //return response()->json($data);
+
+        //$x= Stat::delete($id);
+        // $st = Stat::find($id); 
+        // if(!$st)return "Тийм индекс байхгүй";
+        // $x=$st->delete();
+        // return $x;
+        //return "destroy->".$id;
     }
 }
