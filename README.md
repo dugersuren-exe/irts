@@ -779,15 +779,36 @@ php artisan make:controller AttendanceController --resource
 <details>
 <summary> 11. Routing  </summary>
 
+Хэрэглэгчээс авиваа хүсэлт нь шууд Route дээр ирдэг бөгөөд Route нь тэрхүү хүсэлтэд шууд хариулах уу аль эсвэл **Controller** -руу дамжуулах уу гэдгийг шийддэг гол удирдлага болдог хэсэг гэж ойлгож болно. Өөрөөх хэлбэл хүсэлтэд ШУУД ХАРИУЛАХ аль эсвэл ЯМАР CONTROLLER-ийн ЯМАР FUNCTION руу шилжүүлэх вэ? гэдгийг шийддэг гол удирдлага хэсэг гэж ойлгож болох юм. 
+
 Routing-ийг удирдахын тулд routes фолдер дотор байгаа файлуудыг удирдаж сурах ёстой болдог. Жишээ нь бид бүхэн API үүсгэн ашиглах гэж байгаа болохоор эхлээд <code>routes/api.php </code> файлд дуудалтын төрөл бүрийн хэлбэрүүдийг бичиж туршилт хийж болох юм.
 
-1. Шууд route хэсгээс хариулт өгөх хэлбэр
+1. Шууд route 
+   
+   Энэ нь хэрэглэгчээс ирсэн хүсэлтэд өөрөө шууд хариулах боломжтой хэлбэр юм. 
 
-```
-Route::get('/greeting', function () {
-    return 'Hello World';
-});
-```
+    <code> routes/api.php</code>
+    ```
+    Route::get('/greeting', function () {
+        return 'Hello World';
+    });
+    ```
+    Энэхүү route-ийг бичсэнээр <code> http://localhost:8000/api/greeting</code> гэсэн хүсэлт ирэхэд  <code> Hello World</code>
+    гэсэн хариуг буцаах буцаах юм.
+
+    Мөн
+
+    <code> routes/api.php</code> дотор
+    ```
+    Route::get('/hi', function () {
+        return 'How are you?';
+    });
+    ```
+    Энэхүү route-ийг бичсэнээр <code> http://localhost:8000/api/hi</code> гэсэн хүсэлт ирэхэд  <code> How are you?</code> гэсэн хариуг буцаах буцаах юм.
+
+    Мөн Controller дээр хийгдэж байгаа бүх үйлдлүүдийг тухайн route дотор хийж болох хэдий ч тодорхой үүрэг бүхий Controller руу чиглүүлж өгвөл код бичиж байгаа хүндээ илүү ойлгомжтой болдог. Тиймээс route-үүд нь тухайн хаягийг заасан CONTROLLER-ийн заасан FUNCTION руу холбож өгдөг.
+
+
 2. Controller-ийн функцийг дуудах үед 
    * Controller-ийг routes/api.php дотор дуудаж оруулж ирнэ.
    * Үндсэн код бичигдэнэ.
