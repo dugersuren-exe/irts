@@ -1169,9 +1169,45 @@ public function destroy(string $id)
 
 Controller нь өгөгдлийн баазаас мэдээлэл авч шууд илгээж байсан. Үүнийн шууд илгээхгүйгээр тодорхой форматад хувиргаж илгээх үйлдлийг Resourse файлын тусламжтайгаар гүйцэтгэж болно.
 
+Форматлах Resourse файлыг үүсгэхдээд дараах командыг ашиглана.
+
+Жишээ нь CourseResource файлыг үүсгэх
+
 ```
 php artisan make:resource CourseResource 
 ```
+
+Үүсгэсэн Resourse файлыг дараах форматаар өгч болох юм.
+
+```
+use App\Http\Resources\TeacherResource;
+use App\Http\Resources\StudentResource;
+....
+public function toArray(Request $request): array
+    {
+        //return parent::toArray($request);
+        return [
+            "id"=> $this->id,
+            "class"=>$this->grade.$this->group,
+            "teacher"=> TeacherResource::make($this->teacher),
+            "YearLesson"=>$this->YearLesson,
+            "students"=>[
+                 "count"  =>$this->students->count(),
+                 "list"=>StudentResource::collection($this->students)
+            ],
+            "attendances"=>[
+                "count"  =>$this->attendances->count(),
+                'list'=>$this->attendances
+            ]
+        ];
+
+    }
+```
+
+
+
+php artisan make:resource CourseResource
+php artisan make:resource CourseCollection
 
 </details>
 
@@ -1188,16 +1224,6 @@ php artisan make:resource CourseResource
 
 
 
-# Resource файлыг үүсгэх
-
-Resource файл нь хэрэглэгч рүү илгээх мэдээллийг форматлах үүрэгтэй байдаг.
-
 
 
 php artisan make:controller PhotoController --model=Photo --resource --requests
-31.	 
-32.	 
-33.	php artisan make:resource GradeResource
-34.	 
-35.	php artisan make:resource GradeCollection
-36.	

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TeacherResource;
 use App\Http\Resources\StudentResource;
-use App\Models\Teacher;
 class CourseResource extends JsonResource
 {
     /**
