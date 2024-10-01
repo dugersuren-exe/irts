@@ -1008,6 +1008,9 @@ Routing-ийг удирдахын тулд routes фолдер дотор бай
 
     Мөн Routing-ийн эдгээр хэлбэрээс гадна өөр маш олон төрлийн Route-ийн хэлбэрүүд байдаг. Тэдгээрийг дараа дараагийн хэрэгцээт хэсгүүдэд нь тайлбарлаад явах болно.
 
+## Даалгавар
+
+Та <code>routes/api.php</code> дотор үүсгэж болох бүх route-ийг зөв бичиж оруулах хэрэгтэй. Нийт 5 controller байгаа бөгөөд controller тус бүрд 5 функц байгаа учир нийт 25ш route бичигдэх ёстой.
 </details>
 
 ---
@@ -1153,14 +1156,22 @@ public function destroy(string $id)
 Уг функц дотор return -ийн тусламжтайгаар $id тай тэнцүү байх  мөрийг хайж олоод устгах үйлдэл хийх ба устгах үйлдэл амжилттай болсон эсэх талаарх мэдээллийг буцааж болно.
 
 
+## Даалгавар
 
+Та бусад бүх Controller-ийн кодыг бичиж гүйцээх хэрэгтэй байна.
 </details>
 
 ---
 
 
 <details>
-<summary> 13.  </summary>
+<summary> 13. Resource-форматлах </summary>
+
+Controller нь өгөгдлийн баазаас мэдээлэл авч шууд илгээж байсан. Үүнийн шууд илгээхгүйгээр тодорхой форматад хувиргаж илгээх үйлдлийг Resourse файлын тусламжтайгаар гүйцэтгэж болно.
+
+```
+php artisan make:resource CourseResource 
+```
 
 </details>
 
@@ -1181,9 +1192,7 @@ public function destroy(string $id)
 
 Resource файл нь хэрэглэгч рүү илгээх мэдээллийг форматлах үүрэгтэй байдаг.
 
-```
-php artisan make:resource CourseResource 
-```
+
 
 php artisan make:controller PhotoController --model=Photo --resource --requests
 31.	 
