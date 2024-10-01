@@ -1204,11 +1204,11 @@ public function toArray(Request $request): array
     }
 ```
 
-
-
+2 хэлбэрээр үүсгэж болох юм
+```
 php artisan make:resource CourseResource
 php artisan make:resource CourseCollection
-
+```
 </details>
 
 ---
