@@ -1024,6 +1024,7 @@ CRUD (Create, Read, Update, Delete) гэсэн үндсэн 4 үйлдлийг A
 
 Read буюу өгөгдлийн бааз дээрээс хүснэгтийн бүх өгөгдлийн уншиж авах үйлдэл өөрөөр хэлбэл <code>SELECT * from table </code> query-ийн үр дүнг дараах байдлаар зохион байгуулж болно.
 
+    ```
     Route::get('/courses', [CourseController::class, 'index']);
     ```
     Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses</code> гэсэн **URL** хаяг **get**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **index** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн index функцийг авч үзвэл
@@ -1040,7 +1041,7 @@ Read буюу өгөгдлийн бааз дээрээс хүснэгтийн б
 
     Энэхүү кодын бид дараа дараагийн ойлголтууд дээр сайжруулаад явах юм.
 
-    
+
 
 </details>
 
