@@ -503,8 +503,59 @@ class CourseFactory extends Factory
 
 ```
 
+Үүний дараа өгөгдлөө санамсаргүйгээр үүсгэхдээ DatabaseSeeder дотор дуудаж өгөх шаардлагатай байдаг.
+
+Дуудасхдаа дараах кодын тусламжтайгаар дуудаж ажиллуулна.
 
 
+```
+\App\Models\Course::factory(10)->create();
+```
+
+Дээрх дуудаж байгаа команд нь Course руу санамсаргүй 10 мөр өгөгдөл үүсгэ гэсэн команд юм.
+
+Үүнтэй ижилээр StudentFactory-ийг үүсгэж болох юм.
+
+Тэгвэл дараах командаар StudentFactory файлаа үүсгэх ёстой.
+
+```
+php artisan make:factory StudentFactory
+```
+
+Тухайн StudentFactory дотор санамсаргүйгээр өгөгдөл үүсгэх кодыг бичиж өгнө. 
+
+
+Энд жишээ болгон StudentFactory дотор нэмж бичих гол кодын загварыг оруулж өгвөл.
+
+```
+        return [
+            'course_id' => $this->faker->numberBetween($min=1, $max=7),
+            'firstName' => fake()->name(),
+            'lastName' => fake()->name(),
+            'gender' =>$this->faker->randomElement(['эрэгтэй', 'эмэгтэй']),
+            'phoneNumber' => fake()->name(),
+            'RD' =>fake()->name(),
+            'isActive' => $this->faker->boolean(),
+        ];
+```
+
+Үүнийг мөн DatabaseSeeder дотор дуудаж ажиллуулдаг.
+Өмнөх код дээр нэмж бичвэл 
+
+
+```
+\App\Models\Course::factory(10)->create();
+\App\Models\Student::factory(150)->create();
+```
+
+Дээрх код нь Student хүснэгт рүү 150 мөр өгөгдлийг санамсаргүйгээр оруулна гэсэн үг юм.
+
+
+Уг кодыг бичсний дараар дараах нэг командын тусламжтайгаар 3 seeder  болон 2 Factory-ийг бүгдийг нь ажиллуулахдаа дараах командын тусламжтайгаар дуудаж ажиллуулна.
+
+```
+php artisan db:seed
+```
 
 </details>
 
@@ -512,37 +563,10 @@ class CourseFactory extends Factory
 
 
 <details>
-<summary> 9. Орчиноо бэлдэх  </summary>
-
-</details>
-
----
+<summary> 9. Model-ийн тохиргоо хийх </summary>
 
 
-<details>
-<summary> 9.  </summary>
-
-</details>
-
----
-
-
-4.	
-
-5.	
-
-
-
-
-
-
-
-
-
-
-# Model-ийн тохиргоо хийх
-
-Модел дээр relationship холболт болон нэмэл функцүүдийг бичиж өгснөөр Controller нь түүнийг ашиглан хэрэгцээт өгөгдлөө дуудах боломжтой болно.
+Модел дээр relationship холболт болон нэмэл функцүүдийг бичиж өгснөөр Controller болон Resourse дотор түүнийг дуудан ашиглах, хэрэгцээт өгөгдлүүдээ дуудах боломжтой болно.
 
 Жишээ болнон бид өөрсдийн Model дээр бичигдэх кодыг оруулъя.
 
@@ -560,6 +584,7 @@ class Stat extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public $timestamp=false;
  
     public function attendances(){
         return $this->hasMany(Attendance::class,'stat_id');
@@ -569,6 +594,16 @@ class Stat extends Model
 
 ```
 
+1. Дээрх кодонд байгаа <code> protected $guarded=[]; </code> нь migration дотор тодорхойлогдсон бүх баганыг бүгдийг нь авна гэсэн үг болж байна.
+
+2. Мөн дээрк кодонд <code>public $timestamp=false;</code> гэсэн утга нь StatMigration дотор timestampt талбар байхгүй байгааг илэрхийлж байна.
+3. Дээрх кодонд байгаа 
+   
+    <code> public function attendances(){
+        return $this->hasMany(Attendance::class,'stat_id');
+    }</code> 
+    
+    гэсэн код нь Stat хүснэгт нь гадагш <code> нэгээс олон </code> гэсэн холбоосоор Attendence хүснэгт рүү холбогдоно гэдгийг илэрхийлж байна
 
 ## Teacher model
 
@@ -682,6 +717,20 @@ class Attendance extends Model
 ```
 
 
+</details>
+
+---
+
+
+<details>
+<summary> 10.  </summary>
+
+</details>
+
+---
+
+
+
 # Controller үүсгэх
 
 Controller-ийг дараах командын тусламжтайгаар үүсгэнэ.
@@ -694,6 +743,7 @@ php artisan make:controller CourseController --resource
 
 php artisan make:controller AttendanceController --resource
 ```
+
 
 #Route-ийг удирдах
 
