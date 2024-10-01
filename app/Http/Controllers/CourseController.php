@@ -14,17 +14,18 @@ class CourseController extends Controller
      */
     public function index()
     {   
-      try {
-        $status = true;    
-        $x=CourseResource::collection(Course::all());
-    } catch(\Exception $ex){
-        $status = false;
-         $x = $ex->getMessage();
-    }
+        return Course::all();
+    //   try {
+    //     $status = true;    
+    //     $x=CourseResource::collection(Course::all());
+    // } catch(\Exception $ex){
+    //     $status = false;
+    //      $x = $ex->getMessage();
+    // }
       
-        return response()->json([
-            'data'=>$x,
-        'status'=> $status]) ;
+    //     return response()->json([
+    //         'data'=>$x,
+    //     'status'=> $status]) ;
     }
 
     /**     * Show the form for creating a new resource.
@@ -54,8 +55,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        $course=Course::find($id);
-        return $course ;
+        return Course::find($id);
     }
 
     /**
@@ -71,7 +71,20 @@ class CourseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return "update";
+        $oneCourse=Course::find($id);
+        
+        if($oneCourse){
+            $res=$oneCourse->update([
+                'teacher_id'=> $request->teacher_id,
+                'grade'=> $request->grade,
+                'group'=> $request->group.' UPDATED',
+                'YearLesson'=> $request->YearLesson,
+                'isActive'=> $request->isActive
+            ]);
+            return $id." кодтой өгөгдөл өөрчлөгдлөө";
+        }else{
+            return $id." кодтой өгөгдөл байхгүй";
+        }        
     }
 
     /**
