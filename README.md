@@ -809,18 +809,20 @@ Routing-ийг удирдахын тулд routes фолдер дотор бай
     Мөн Controller дээр хийгдэж байгаа бүх үйлдлүүдийг тухайн route дотор хийж болох хэдий ч тодорхой үүрэг бүхий Controller руу чиглүүлж өгвөл код бичиж байгаа хүндээ илүү ойлгомжтой болдог. Тиймээс route-үүд нь тухайн хаягийг заасан CONTROLLER-ийн заасан FUNCTION руу холбож өгдөг.
 
 
-2. Controller-ийн функцийг дуудах үед 
-   * Controller-ийг routes/api.php дотор дуудаж оруулж ирнэ.
-   * Үндсэн код бичигдэнэ.
+2. Ирсэн хүсэлтийг Controller-ийн функц руу чиглүүлэх 
+    
+    Ирсэн хүсэлтийг Controller-ийн заасан функц руу дамжуулах үйлдэл нь дараах байдлаар бичигдэнэ.
+    
+    <code>routes/api.php</code> дотор дараах чиглүүлэх кодыг бичиж болох юм.
 
+    ```
+    Route::get('/courses', [CourseController::class, 'index']);
+    Route::get('/courses/{id}', [CourseController::class, 'show']);
+    Route::post('/courses', [CourseController::class, 'create']);
+    Route::post('/courses/{id}', [CourseController::class, 'update']);
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
+    ```
 
-```
-    Route::get('/courses', [TeacherController::class, 'index']);
-    Route::get('/courses/{id}', [TeacherController::class, 'show']);
-    Route::post('/courses', [TeacherController::class, 'create']);
-    Route::post('/courses/{id}', [TeacherController::class, 'update']);
-    Route::delete('/courses/{id}', [TeacherController::class, 'destroy']);
-```
 Route-ийн дуудалтыг харах командыг өгч болно.
 
 ```
