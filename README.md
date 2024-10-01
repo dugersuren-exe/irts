@@ -605,6 +605,9 @@ class Stat extends Model
     
     гэсэн код нь Stat хүснэгт нь гадагш <code> нэгээс олон </code> гэсэн холбоосоор Attendence хүснэгт рүү холбогдоно гэдгийг илэрхийлж байна
 
+
+Мөн дээрх кодонд өгөгдсөн зарчимаар Teacher model-ийг үүсгэвэл дараах байдлаар бичигдэнэ.
+
 ## Teacher model
 
 ```
@@ -619,6 +622,7 @@ class Teacher extends Model
 {
     use HasFactory;
     protected $guarded=[];
+    public $timestamp=false;
 
     public function courses(){
         return $this->hasMany(Course::class,'teacher_id');
@@ -627,6 +631,11 @@ class Teacher extends Model
 }
 
 ```
+Энэхүү код нь өмнөхтэй ижил агуулгатай юм.
+
+
+
+Одоо арай ялгаатай нэг Course model-ийг авч үзье. Бичигдэх кодыг доор харуулав.
 
 ## Course model
 
@@ -657,6 +666,13 @@ class Course extends Model
 }
 
 ```
+Дээрх кодонд ялгаатай бичигдэж байгаа зүйл нь 
+
+<code>public function teacher(){
+        return $this->belongsTo(Teacher::class,'teacher_id');
+    }</code> бөгөөд энэ нь тухайн Course хүснэгт нь Teacher хүснэгттэй <code>Олоноос нэг</code> гэсэн холбоосоор холбогдсоныг харуулж байна.
+
+Ийм байдлаар дараах Model-уудыг үүсгэж болох юм.
 
 ## Student model
 
@@ -723,31 +739,47 @@ class Attendance extends Model
 
 
 <details>
-<summary> 10.  </summary>
+<summary> 10. Controller үүсгэх </summary>
+
+
+Controller файлыг дараах командын тусламжтайгаар үүсгэдэг.
+
+```
+php artisan make:controller StatController 
+php artisan make:controller StudentController 
+php artisan make:controller TeacherController 
+php artisan make:controller CourseController
+php artisan make:controller AttendanceController
+```
+Энэ команд нь зөвхөн Controller файлыг хоосон үүсгэдэг.
+
+
+Үүнээс гадна Controller дотор байж болох хоосон функцүүдийг мөн нэмэлтээр оруулан үүсгүүлж болдог. Ингэж үүсгэхийн тулд дээрх командын оронд дараах байдлаар бичиж өгч болно.
+
+## АНХААР
+
+Дээрх командын тусламжтайгаар үүсгэхийн оронд доор бичигдсэн кодыг ашиглаж болно. Ингэснээр тодорхой функцүүдтэй үүсэх боломжтой.
+```
+php artisan make:controller StatController --resource
+php artisan make:controller StudentController --resource
+php artisan make:controller TeacherController --resource
+php artisan make:controller CourseController --resource
+php artisan make:controller AttendanceController --resource
+```
+
+Одоо бид Controller файлыг үүсгэсэн хэдий ч түүнийг дуудаж ажиллаж байгааг хянах боломжийг бүрдүүлэхийн тулд **Routing** ийг удирдах шаардлагатай болдог.
+
+
 
 </details>
 
 ---
 
 
+<details>
+<summary> 11. Routing  </summary>
 
-# Controller үүсгэх
-
-Controller-ийг дараах командын тусламжтайгаар үүсгэнэ.
-
-```
-php artisan make:controller StatController --resource
-php artisan make:controller StudentController --resource
-php artisan make:controller TeacherController --resource
-php artisan make:controller CourseController --resource
-
-php artisan make:controller AttendanceController --resource
-```
-
-
-#Route-ийг удирдах
-
-routes/api.php файлд route-үүдийг бичиж өгнө.
+Routing-ийг удирдахын тулд routes фолдер дотор байгаа файлуудыг удирдаж сурах ёстой болдог. Жишээ нь бид бүхэн API үүсгэн ашиглах гэж байгаа болохоор эхлээд <code>routes/api.php </code> файлд дуудалтын төрөл бүрийн хэлбэрүүдийг бичиж туршилт хийж болох юм.
 
 1. Шууд route хэсгээс хариулт өгөх хэлбэр
 
@@ -773,6 +805,37 @@ Route-ийн дуудалтыг харах командыг өгч болно.
 ```
 php artisan route:list
 ```
+
+</details>
+
+---
+
+
+<details>
+<summary> 12.  </summary>
+
+</details>
+
+---
+
+
+<details>
+<summary> 13.  </summary>
+
+</details>
+
+---
+
+
+<details>
+<summary> 14.  </summary>
+
+</details>
+
+---
+
+
+
 
 # Resource файлыг үүсгэх
 
