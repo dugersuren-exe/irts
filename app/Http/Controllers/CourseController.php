@@ -13,7 +13,8 @@ class CourseController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {    try {
+    {   
+      try {
         $status = true;    
         $x=CourseResource::collection(Course::all());
     } catch(\Exception $ex){
@@ -78,8 +79,7 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        $res=Course::find($id);
-        
+        $res=Course::find($id);       
 
         if ($res.count()>0){
             $res->delete();

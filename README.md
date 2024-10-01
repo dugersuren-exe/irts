@@ -919,16 +919,94 @@ Routing-ийг удирдахын тулд routes фолдер дотор бай
     ```
     Route::get('/courses', [CourseController::class, 'index']);
     Route::get('/courses/{id}', [CourseController::class, 'show']);
-    Route::post('/courses', [CourseController::class, 'create']);
+    Route::post('/courses', [CourseController::class, 'store']);
     Route::post('/courses/{id}', [CourseController::class, 'update']);
     Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
     ```
 
-Route-ийн дуудалтыг харах командыг өгч болно.
+    Жишээ нь: <code>routes/api.php</code> дотор дараах чиглүүлэх кодыг бичиж өгөхөд.
 
-```
-php artisan route:list
-```
+    ```
+    Route::get('/courses', [CourseController::class, 'index']);
+    ```
+    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses</code> гэсэн **URL** хаяг **get**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **index** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн index функцийг авч үзвэл
+
+    ```
+    public function index()
+    {
+        // 
+    }
+    ```
+    байх бөгөөд энэ функц нь параметргүй байна. Уг функц дотор **return**  -ийн тусламжтайгаар хүссэн үр дүнгээ буцааж болно гэсэн үг юм.
+
+
+
+    ```
+    Route::get('/courses/{id}', [CourseController::class, 'show']);
+    ```
+    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses/12</code> гэсэн **URL** хаяг **get**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **show** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн show функцийг авч үзвэл
+
+    ```
+    public function show(string $id)
+    {
+        // 
+    }
+    ```
+    байх бөгөөд энэ функц нь **string $id** гэсэн нэг параметртай байна. Уг функц дотор **return**  -ийн тусламжтайгаар $id -ийг ашиглан тухайн өгөгдөл хайж хэрэгцээт үр дүнгээ буцааж болно гэсэн үг юм.
+
+
+    ```
+    Route::post('/courses', [CourseController::class, 'store']);
+    ```
+    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses</code> гэсэн **URL** хаяг **post**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **store** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн store функцийг авч үзвэл
+
+    ```
+    public function store(Request $request)
+    {
+        // 
+    }
+    ```
+    байх бөгөөд энэ функц нь **Request $request** гэсэн нэг параметртай байна. Уг функц дотор **return**  -ийн тусламжтайгаар $request хувьсагчийн тусламжтайгаар ирсэн утгыг авч өгөгдлийн бааз руу хадгалах үйлдлийг хийж амжилттай болсон эсэх талаарх мэдээллийг буцааж болно.
+
+
+    ```
+    Route::post('/courses/{id}', [CourseController::class, 'update']);
+    ```
+    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses/23</code> гэсэн **URL** хаяг **post**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **update** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн update функцийг авч үзвэл
+
+    ```
+    public function update(Request $request, string $id)
+    {
+        // 
+    }
+    ```
+    байх бөгөөд энэ функц нь **Request $request, string $id** гэсэн 2 параметртай байна. $id -ийн утга бүхий өгөгдлийн өгөгдлийн сангаас хайж олоод $request хувьсагчид ирсэн утгаар өөрчилж хадгална. Уг функц дотор **return**  -ийн тусламжтайгаар өгөгдлийн баазыг утгыг амжилттай өөрчилж чадсан эсэх таларх мэдээллийг буцааж болно.
+
+
+    ```
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
+    ```
+    Дээрх чиглүүлэх код нь <code> http://localhost:8000/api/courses/33</code> гэсэн **URL** хаяг **delete**  method-оор дуудагдах үед **CourseController** нэртэй Controller-ийн **destroy** нэртэй функц дуудагдана гэсэн хэллэг юм. CourseController -ийн destroy функцийг авч үзвэл
+
+    ```
+    public function destroy(string $id)
+    {
+        // 
+    }
+    ```
+    байх бөгөөд энэ функц нь **string $id** гэсэн нэг параметртай байна. Уг функц дотор **return**  -ийн тусламжтайгаар $id -ийн id бүхий мөрийг хайж олоод устгах үйлдэл хийх ба устгах үйлдэл амжилттай болсон эсэх талаарх мэдээллийг буцааж болно.
+
+
+    Мөн routing -ийн үйлдлүүд нь зөв болсон эсэхийг шалгахдаа дараах командыг ашигладаг.
+
+    ```
+    php artisan route:list
+    ```
+    Энэ команд нь одоо ажиллаж байгаа зөв route-үүдийг гаргаж харуулах үүрэгтэй байдаг.
+
+
+
+    Мөн Routing-ийн эдгээр хэлбэрээс гадна өөр маш олон төрлийн Route-ийн хэлбэрүүд байдаг. Тэдгээрийг дараа дараагийн хэрэгцээт хэсгүүдэд нь тайлбарлаад явах болно.
 
 </details>
 
@@ -936,7 +1014,17 @@ php artisan route:list
 
 
 <details>
-<summary> 12.  </summary>
+<summary> 12. CRUD үйлдэл </summary>
+
+CRUD (Create, Read, Update, Delete) гэсэн үндсэн 4 үйлдлийг API-ийн тусламжтайгаар гүйцэтгэх боломжийг олгохдоо Controller дотрох функцүүдээ ашиглан хэрэгжүүлдэг. Уг функцүүд нь Model-ийг ашиглан өгөгдлийн баазаас өгөгдөл унших, үүсгэх, өөрчлөх, устгах үйлдлүүдийг гүйцэтгэдэг.
+
+Энэ хэсэгт бид эхлээд энгийн үйлдлүүдийг авч үзэх бөгөөд дараа нь түүнийг сайжруулах форматлах зэрэг үйлдлүүдийг хэрхэн гүйцэтгэх талаар авч үзнэ.
+
+### Read - Хүснэгтийн бүх өгөгдлийг уншиж авах 
+
+Read буюу өгөгдлийн бааз дээрээс хүснэгтийн бүх өгөгдлийн уншиж авах үйлдэл өөрөөр хэлбэл <code>SELECT * from table </code> query-ийн үр дүнг дараах байдлаар зохион байгуулж болно.
+
+
 
 </details>
 
