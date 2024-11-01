@@ -11,16 +11,25 @@ class StatController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $x=Stat::with(['attendances'])->get();
-
-        //dd($x);
-        if($x.count() > 0){
-            return StatResource::collection($x);
-        }else{
-            return response()->json(['message'=>'No record availabel'],200);
+    public function index(){
+        try{
+            $status = true;    
+            $x=StatResource::collection(Stat::all());
+        }catch(\Exception $ex){
+            $status = false;
+            $x = $ex->getMessage();
         }
+        return response()->json([
+                'message'=>'No record availabel',
+                'data'=>StatResource::collection($x),
+            ],200);
+            
+        //dd($x);
+        // if($x.count() > 0){
+        //     return StatResource::collection($x);
+        // }else{
+        //     return response()->json(['message'=>'No record availabel'],200);
+        // }
         
         //return 'srgdfgd';
     }

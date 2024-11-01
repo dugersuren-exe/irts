@@ -18,15 +18,15 @@ class CourseController extends Controller
       try {
         $status = true;    
         $x=CourseResource::collection(Course::all());
-    } catch(\Exception $ex){
-        $status = false;
-         $x = $ex->getMessage();
-    }
-      
-        return response()->json([
-            'data'=>$x,
-        'status'=> $status]) ;
-    }
+      }catch(\Exception $ex){
+            $status = false;
+            $x = $ex->getMessage();
+      }
+        
+            return response()->json([
+                'data'=>$x,
+            'status'=> $status]) ;
+        }
 
     /**     * Show the form for creating a new resource.
      */
